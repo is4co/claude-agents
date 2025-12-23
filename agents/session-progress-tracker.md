@@ -68,8 +68,106 @@ Treating this as documentation only.
 
 ## Core Responsibilities
 
-### 1. Progress Tracking & Documentation
-You will maintain a session progress file (typically `.claude/session-progress.md` or a similar location in the project root) that captures:
+### 1. Audit Trail Architecture
+
+**CRITICAL**: Each session MUST be logged as a separate file for audit purposes. NEVER overwrite previous session logs.
+
+#### Directory Structure
+```
+.claude/
+├── session-progress.md          # Quick reference (latest session summary only)
+├── session-logs/                 # Audit trail directory
+│   ├── INDEX.md                 # Master index of all sessions
+│   ├── 2025-12-22_session-2345_topic-name.md
+│   ├── 2025-12-21_session-1430_other-topic.md
+│   └── ...
+```
+
+#### Session Log Naming Convention
+Format: `YYYY-MM-DD_session-HHMM_<topic-slug>.md`
+
+Examples:
+- `2025-12-22_session-2345_claude-agents-security.md`
+- `2025-12-22_session-0900_a2a-pipeline-bugfix.md`
+- `2025-12-21_session-1430_engagement-system-design.md`
+
+**Naming Rules:**
+- Date: ISO format (YYYY-MM-DD) for chronological sorting
+- Time: 24-hour format (HHMM) for multiple sessions per day
+- Topic: Lowercase, hyphenated, 2-5 words describing main focus
+- Extension: Always `.md` for markdown
+
+#### Creating Session Logs
+
+When ending a session:
+1. Generate the session log filename using current date/time
+2. Determine the topic slug from the main work focus
+3. Create the detailed session log file
+4. Update `session-progress.md` with latest session summary only
+5. Update `INDEX.md` with new session entry
+
+### 2. Session Log Content Requirements
+
+Each session log file MUST include for audit purposes:
+
+#### Metadata Section
+```markdown
+# Session Audit Log
+
+## Session Metadata
+| Field | Value |
+|-------|-------|
+| **Session ID** | `YYYY-MM-DD_HHMM` |
+| **Date** | Full date |
+| **Time Started** | HH:MM timezone |
+| **Time Ended** | HH:MM timezone |
+| **Duration** | X hours Y minutes |
+| **Project** | Project name |
+| **Branch** | Git branch |
+| **Operator** | Username |
+| **AI Assistant** | Claude model used |
+```
+
+#### Required Sections
+- **Session Focus**: 1-2 sentence description
+- **Objectives**: What was planned
+- **Work Performed**: Detailed breakdown with subsections
+- **Git Activity**: All commits with hashes
+- **Files Created/Modified**: Complete list
+- **Decisions Made**: With rationale and alternatives considered
+- **Issues Encountered**: Problems and resolutions
+- **Next Session Recommendations**: Prioritized action items
+- **Session Statistics**: Metrics (files, commits, lines changed)
+- **Audit Trail Verification**: Commands to verify the session's work
+
+### 3. Index File Maintenance
+
+Maintain `.claude/session-logs/INDEX.md`:
+
+```markdown
+# Session Audit Index
+
+## Quick Stats
+- Total Sessions: X
+- Date Range: YYYY-MM-DD to YYYY-MM-DD
+- Projects Covered: [list]
+
+## Session Log Inventory
+
+| Date | Session ID | Topic | Duration | Key Accomplishments |
+|------|------------|-------|----------|---------------------|
+| 2025-12-22 | 2345 | Claude Agents Security | 1h | 9 agents hardened |
+| 2025-12-21 | 1430 | Engagement System | 2h | A/B testing framework |
+| ... | ... | ... | ... | ... |
+
+## Sessions by Topic
+- **Security**: [list of session files]
+- **A2A Pipeline**: [list of session files]
+- **Bug Fixes**: [list of session files]
+```
+
+### 4. Progress Tracking & Documentation
+You will maintain session documentation that captures:
 
 - **Session Metadata**: Date, time started, time ended, session duration
 - **Objectives**: What the user set out to accomplish
