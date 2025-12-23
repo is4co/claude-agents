@@ -1,0 +1,39 @@
+# Sensitive files
+*.key
+*.pem
+*credentials*
+*secrets*
+.env
+.env.*
+*password*
+*token*
+api_keys.sh
+
+# System-specific configs
+config.local.sh
+*.local.sh
+local/
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Backup files
+*.backup
+*.bak
+backup-*/
+
+# Test files (if you want to exclude them)
+test-*.md
+scratch/
+
+# Logs
+*.log
+
+# OS generated files
+Thumbs.db
+desktop.ini
